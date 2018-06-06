@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">军大协创</string>
+    <string name="dialog_positive">确 定</string>
+    <string name="dialog_negative">取 消</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- 基本颜色 -->
+    <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="translucent">#88000000</color>
+
+    <!-- 项目基本颜色-->
+    <!-- 一级标题颜色 -->
+    <color name="base_text_color">#414141</color>
+    <!-- 二级标题颜色 -->
+    <color name="base_subtext_color">#A8A8A8</color>
+    <!-- 页面背景颜色 -->
+    <color name="base_background_color">#ffffffff</color>
+    <!-- 分割线颜色-->
+    <color name="base_line_color">#dcdcdc</color>
+    <!-- 输入框提示-->
+    <color name="base_hint_color">#c0c0c0</color>
+
+    <!-- 橘色 -->
+    <color name="base_orange">#FFBA52</color>
+    <!-- 红色 -->
+    <color name="base_red">#ff4543</color>
+    <!-- 灰色 -->
+    <color name="base_gray">#999999</color>
+    <!-- 蓝色 -->
+    <color name="base_blue">#2aaeff</color>
+    <!-- 浅蓝色 -->
+    <color name="base_blue_light">#3b98fb</color>
+    <!-- 绿色 -->
+    <color name="base_green">#12c136</color>
+
+    <color name="text_color">#a9a9a9</color>
+
+    <color name="bg_color">#f2f2f2</color>
+</resources>
