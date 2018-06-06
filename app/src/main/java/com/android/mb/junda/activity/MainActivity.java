@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.android.mb.junda.R;
 import com.android.mb.junda.constants.ProjectConstants;
+import com.android.mb.junda.tts.SystemTTS;
 import com.android.mb.junda.utils.ActivityManager;
 import com.android.mb.junda.utils.DialogHelper;
 import com.android.mb.junda.utils.NavigationHelper;
@@ -25,6 +26,13 @@ public class MainActivity extends BaseActivity {
         hideBack();
         setTitleText(R.string.app_name);
         setRightText("退出");
+        findViewById(R.id.btnTest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SystemTTS systemTTS = SystemTTS.getInstance(getApplicationContext());
+                systemTTS.playText("你好,我是小白");
+            }
+        });
     }
 
     @Override

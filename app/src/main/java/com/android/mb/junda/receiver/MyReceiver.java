@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.android.mb.junda.constants.ProjectConstants;
+import com.android.mb.junda.entity.PushMsg;
+import com.android.mb.junda.tts.SystemTTS;
 import com.android.mb.junda.utils.ActivityManager;
+import com.android.mb.junda.utils.Helper;
+import com.android.mb.junda.utils.JsonHelper;
 import com.android.mb.junda.utils.PreferencesHelper;
 
 import org.json.JSONException;
@@ -35,18 +39,14 @@ public class MyReceiver extends BroadcastReceiver {
 			String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
 			PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_REGISTRATION_ID, regId);
 		} else if (JPushInterface.ACTION_MESSAGE_RECEIVED.equals(intent.getAction())) {
-			Log.d(TAG, "[MyReceiver] 接收到推送下来的自定义消息: " + bundle.getString(JPushInterface.EXTRA_MESSAGE));
-			processCustomMessage(context, bundle);
+			openVoice(context, bundle);
 		} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
-			Log.d(TAG, "[MyReceiver] 接收到推送下来的通知");
-			int notifactionId = bundle.getInt(JPushInterface.EXTRA_NOTIFICATION_ID);
-			Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
+			openVoice(context, bundle);
 		} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-			openNotification(context, bundle);
+			openVoice(context, bundle);
 		} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 			Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
 			//在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
-
 		} else if(JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
 			boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
 			Log.w(TAG, "[MyReceiver]" + intent.getAction() +" connected state change to "+connected);
@@ -90,21 +90,14 @@ public class MyReceiver extends BroadcastReceiver {
 		return sb.toString();
 	}
 
-	//send msg to MainActivity
-	private void processCustomMessage(Context context, Bundle bundle) {
-		String content = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+	private void openVoice(Context context,Bundle bundle){
 		String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
-		System.out.println("收到了自定义消息@@消息内容是:"+ content);
-		System.out.println("收到了自定义消息@@消息extra是:"+ extra);
-
-	}
-
-	private void openNotification(Context context, Bundle bundle){
-		String content = bundle.getString(JPushInterface.EXTRA_MESSAGE);
-		String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
-		System.out.println("收到了自定义消息@@消息内容是:"+ content);
-		System.out.println("收到了自定义消息@@消息extra是:"+ extra);
-		ActivityManager.getInstance().closeAllActivity();
+		System.out.println("收到extra是:"+ extra);
+		PushMsg pushMsg = JsonHelper.fromJson(extra, PushMsg.class);
+		if (pushMsg!=null && Helper.isNotEmpty(pushMsg.getText())){
+			SystemTTS systemTTS = SystemTTS.getInstance(context.getApplicationContext());
+			systemTTS.playText(pushMsg.getText());
+		}
 	}
 
 }

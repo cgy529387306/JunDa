@@ -140,7 +140,7 @@
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value=" 3e12b1f227f01fde6ca91b6a" />
+        <meta-data android:name="JPUSH_APPKEY" android:value="3e12b1f227f01fde6ca91b6a" />
     </application>
 
 </manifest>
