@@ -37,7 +37,7 @@ public class SystemTTS extends UtteranceProgressListener implements TTS, OnUtter
                 //系统语音初始化成功
                 if (i == TextToSpeech.SUCCESS) {
                     int result = textToSpeech.setLanguage(Locale.CHINA);
-                    textToSpeech.setPitch(1.0f);// 设置音调，值越大声音越尖（女生），值越小则变成男声,1.0是常规
+                    textToSpeech.setPitch(1.4f);// 设置音调，值越大声音越尖（女生），值越小则变成男声,1.0是常规
                     textToSpeech.setSpeechRate(1.0f);
                     textToSpeech.setOnUtteranceProgressListener(SystemTTS.this);
                     textToSpeech.setOnUtteranceCompletedListener(SystemTTS.this);
