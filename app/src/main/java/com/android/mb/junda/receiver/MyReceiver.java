@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.mb.junda.activity.SplashActivity;
 import com.android.mb.junda.constants.ProjectConstants;
 import com.android.mb.junda.entity.PushMsg;
 import com.android.mb.junda.tts.SystemTTS;
@@ -43,7 +44,7 @@ public class MyReceiver extends BroadcastReceiver {
 		} else if (JPushInterface.ACTION_NOTIFICATION_RECEIVED.equals(intent.getAction())) {
 			openVoice(context, bundle);
 		} else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
-//			openVoice(context, bundle);
+			openNotification(context,bundle);
 		} else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
 			Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
 			//在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
@@ -98,6 +99,17 @@ public class MyReceiver extends BroadcastReceiver {
 			SystemTTS systemTTS = SystemTTS.getInstance(context.getApplicationContext());
 			systemTTS.playText(pushMsg.getText());
 		}
+	}
+
+	private void openNotification(Context context, Bundle bundle){
+		String content = bundle.getString(JPushInterface.EXTRA_MESSAGE);
+		String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
+		System.out.println("收到了自定义消息@@消息内容是:"+ content);
+		System.out.println("收到了自定义消息@@消息extra是:"+ extra);
+		ActivityManager.getInstance().closeAllActivity();
+		Intent mIntent = new Intent(context, SplashActivity.class);
+		mIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(mIntent);
 	}
 
 }
