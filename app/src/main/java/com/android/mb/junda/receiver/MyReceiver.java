@@ -9,7 +9,7 @@ import android.util.Log;
 import com.android.mb.junda.activity.SplashActivity;
 import com.android.mb.junda.constants.ProjectConstants;
 import com.android.mb.junda.entity.PushMsg;
-import com.android.mb.junda.tts.SystemTTS;
+import com.android.mb.junda.tts.TtsManager;
 import com.android.mb.junda.utils.ActivityManager;
 import com.android.mb.junda.utils.Helper;
 import com.android.mb.junda.utils.JsonHelper;
@@ -93,11 +93,13 @@ public class MyReceiver extends BroadcastReceiver {
 
 	private void openVoice(Context context,Bundle bundle){
 		String extra = bundle.getString(JPushInterface.EXTRA_EXTRA);
+		String alert = bundle.getString(JPushInterface.EXTRA_ALERT);
 		System.out.println("收到extra是:"+ extra);
-		PushMsg pushMsg = JsonHelper.fromJson(extra, PushMsg.class);
+		System.out.println("收到alert是:"+ alert);
+		String content = "{}".equals(extra)?alert:extra;
+		PushMsg pushMsg = JsonHelper.fromJson(content, PushMsg.class);
 		if (pushMsg!=null && Helper.isNotEmpty(pushMsg.getText())){
-			SystemTTS systemTTS = SystemTTS.getInstance(context.getApplicationContext());
-			systemTTS.playText(pushMsg.getText());
+			TtsManager.getInstance(context).playText(pushMsg.getText());
 		}
 	}
 

@@ -1,13 +1,23 @@
 package com.android.mb.junda.app;
 
+import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 
+import com.android.mb.junda.R;
 import com.android.mb.junda.constants.ProjectConstants;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.SynthesizerListener;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.cache.converter.SerializableDiskConverter;
 import com.zhouyou.http.cache.model.CacheMode;
+
+import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
@@ -22,6 +32,7 @@ public class MBApplication extends Application{
 
     @Override
     public void onCreate() {
+        SpeechUtility.createUtility(MBApplication.this, "appid=" + getString(R.string.app_id));
         super.onCreate();
         init(this);
         initJPush();
@@ -59,6 +70,7 @@ public class MBApplication extends Application{
         return sInstance;
     }
 
+
     /**
      * 初始化
      * <p>若未配置manifest可使用此方法初始化</p>
@@ -72,5 +84,6 @@ public class MBApplication extends Application{
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
     }
+
 
 }

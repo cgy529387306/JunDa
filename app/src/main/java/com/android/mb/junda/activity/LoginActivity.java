@@ -93,7 +93,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
                         LoginResp loginResp = JsonHelper.fromJson(response,LoginResp.class);
                         if (loginResp!=null){
                             if (loginResp.getStatus() == 0){
-                                doPostLoginInfo(mobile,loginResp.getToken());
+                                ToastHelper.showToast("登录成功");
+                                PreferencesHelper.getInstance().putBoolean(ProjectConstants.Preferences.KEY_IS_LOGIN,true);
+                                PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_CURRENT_TOKEN,loginResp.getToken());
+                                PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_USERNAME,mobile);
+                                NavigationHelper.startActivity(LoginActivity.this,MainActivity.class,null,true);
                             }else{
                                 ToastHelper.showToast(loginResp.getMsg());
                             }
@@ -114,41 +118,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
             return;
         }
         finish();
-    }
-
-    private void doPostLoginInfo(String userName, final String token){
-        String rid = PreferencesHelper.getInstance().getString(ProjectConstants.Preferences.KEY_REGISTRATION_ID);
-        if (Helper.isEmpty(rid)){
-            rid = JPushInterface.getRegistrationID(getApplicationContext());
-        }
-        EasyHttp.post(ProjectConstants.Url.USER_POST_INFO)
-                .params("username",userName)
-                .params("token",token)
-                .params("resid",rid)
-                .execute(new CallBackProxy<CustomApiResult<String>, String>(new SimpleCallBack<String>() {
-                    @Override
-                    public void onError(ApiException e) {
-                        if (Helper.isNotEmpty(e.getMessage())){
-                            ToastHelper.showToast(e.getMessage());
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess(String response) {
-                        LoginResp loginResp = JsonHelper.fromJson(response,LoginResp.class);
-                        if (loginResp!=null){
-                            if (loginResp.getStatus() == 0){
-                                ToastHelper.showToast("登录成功");
-                                PreferencesHelper.getInstance().putBoolean(ProjectConstants.Preferences.KEY_IS_LOGIN,true);
-                                PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_CURRENT_TOKEN,token);
-                                NavigationHelper.startActivity(LoginActivity.this,MainActivity.class,null,true);
-                            }else{
-                                ToastHelper.showToast(loginResp.getMsg());
-                            }
-                        }
-                    }
-                }) {
-                });
     }
 
 

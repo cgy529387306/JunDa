@@ -45,7 +45,12 @@ public class ProjectConstants {
         /**
          * 发送信息
          */
-        public static final String USER_POST_INFO = " /Api/Index/loginInfo";
+        public static final String USER_POST_INFO = "/Api/Index/loginInfo";
+
+        /**
+         * 获取日志
+         */
+        public static final String GET_LOG_INFO = "/Api/Index/getLog";
     }
 
     /**

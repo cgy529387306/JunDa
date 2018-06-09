@@ -13,7 +13,7 @@ android {
 
     sourceSets {
         main {
-            jniLibs.srcDir 'libs'
+            jniLibs.srcDirs = ['libs']
         }
     }
 
@@ -34,4 +34,6 @@ dependencies {
     compile 'com.android.support:support-v4:26.0.0'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.zhouyou:rxeasyhttp:2.0.6'
+    compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.2'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }
