@@ -326,7 +326,7 @@ public class DialogHelper {
      * @return
      */
     public static Dialog showCustomDialog(Context context, View contentView, int gravityPosition, float widthPer) {
-        return showCustomDialog(context, R.style.FW2_Custom_Dialog, contentView, gravityPosition, widthPer, true, true);
+        return showCustomDialog(context, R.style.MB_Custom_Dialog, contentView, gravityPosition, widthPer, true, true);
     }
 
     /**

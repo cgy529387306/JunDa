@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.mb.junda.R;
 import com.android.mb.junda.adapter.Log2Adapter;
@@ -33,6 +34,7 @@ public class Log2Fragment extends Fragment {
     private List<Log2> dataList = new ArrayList<>();
     private Log2Adapter log2Adapter;
     private PullLoadMoreRecyclerView recyclerView;
+    private TextView tvEmpty;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class Log2Fragment extends Fragment {
     }
 
     private void initView(View view){
+        tvEmpty = view.findViewById(R.id.tv_empty);
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLinearLayout();
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -106,8 +109,9 @@ public class Log2Fragment extends Fragment {
                             recyclerView.setPullLoadMoreCompleted();
                             if (currentPage==1){
                                 if (Helper.isEmpty(log2Resp.getData())){
-                                    //TODO showEmpty
+                                    tvEmpty.setVisibility(View.VISIBLE);
                                 }else{
+                                    tvEmpty.setVisibility(View.GONE);
                                     dataList.addAll(log2Resp.getData());
                                     log2Adapter.setNewData(dataList);
                                 }
