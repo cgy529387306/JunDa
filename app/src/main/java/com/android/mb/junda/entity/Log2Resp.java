@@ -1,0 +1,59 @@
+package com.android.mb.junda.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2018\6\10 0010.
+ */
+
+public class Log2Resp {
+    private String count;
+    private int page;
+    private int pagesize;
+    private int pagenum;
+    private List<Log2> data;
+
+    public String getCount() {
+        return count == null ? "" : count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPagesize() {
+        return pagesize;
+    }
+
+    public void setPagesize(int pagesize) {
+        this.pagesize = pagesize;
+    }
+
+    public int getPagenum() {
+        return pagenum;
+    }
+
+    public void setPagenum(int pagenum) {
+        this.pagenum = pagenum;
+    }
+
+    public List<Log2> getData() {
+        if (data == null) {
+            return new ArrayList<>();
+        }
+        return data;
+    }
+
+    public void setData(List<Log2> data) {
+        this.data = data;
+    }
+}
