@@ -9,13 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.mb.junda.R;
+import com.android.mb.junda.activity.LoginActivity;
 import com.android.mb.junda.adapter.Log2Adapter;
 import com.android.mb.junda.constants.ProjectConstants;
 import com.android.mb.junda.entity.CustomApiResult;
 import com.android.mb.junda.entity.Log2;
 import com.android.mb.junda.entity.Log2Resp;
+import com.android.mb.junda.utils.ActivityManager;
 import com.android.mb.junda.utils.Helper;
 import com.android.mb.junda.utils.JsonHelper;
+import com.android.mb.junda.utils.NavigationHelper;
 import com.android.mb.junda.utils.PreferencesHelper;
 import com.android.mb.junda.utils.ToastHelper;
 import com.android.mb.junda.widget.DividerItemDecoration;
@@ -106,21 +109,23 @@ public class Log2Fragment extends Fragment {
                     public void onSuccess(String response) {
                         Log2Resp log2Resp = JsonHelper.fromJson(response,Log2Resp.class);
                         if (log2Resp!=null){
-                            recyclerView.setPullLoadMoreCompleted();
-                            if (currentPage==1){
-                                if (Helper.isEmpty(log2Resp.getData())){
-                                    tvEmpty.setVisibility(View.VISIBLE);
+                            if (log2Resp.getStatus()==0){
+                                recyclerView.setPullLoadMoreCompleted();
+                                if (currentPage==1){
+                                    if (Helper.isEmpty(log2Resp.getData())){
+                                        tvEmpty.setVisibility(View.VISIBLE);
+                                    }else{
+                                        tvEmpty.setVisibility(View.GONE);
+                                        dataList.addAll(log2Resp.getData());
+                                        log2Adapter.setNewData(dataList);
+                                    }
                                 }else{
-                                    tvEmpty.setVisibility(View.GONE);
-                                    dataList.addAll(log2Resp.getData());
-                                    log2Adapter.setNewData(dataList);
-                                }
-                            }else{
-                                if (Helper.isEmpty(log2Resp.getData())){
-                                    recyclerView.setPushRefreshEnable(false);
-                                }else{
-                                    dataList.addAll(log2Resp.getData());
-                                    log2Adapter.setNewData(dataList);
+                                    if (Helper.isEmpty(log2Resp.getData())){
+                                        recyclerView.setPushRefreshEnable(false);
+                                    }else{
+                                        dataList.addAll(log2Resp.getData());
+                                        log2Adapter.setNewData(dataList);
+                                    }
                                 }
                             }
                         }

@@ -13,7 +13,25 @@ public class Log1Resp {
     private int page;
     private int pagesize;
     private int pagenum;
+    private int status;
+    private String msg;
     private List<Log1> data;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMsg() {
+        return msg == null ? "" : msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public String getCount() {
         return count == null ? "" : count;

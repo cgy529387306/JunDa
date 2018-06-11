@@ -9,13 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.mb.junda.R;
+import com.android.mb.junda.activity.LoginActivity;
+import com.android.mb.junda.activity.MainActivity;
 import com.android.mb.junda.adapter.Log1Adapter;
 import com.android.mb.junda.constants.ProjectConstants;
 import com.android.mb.junda.entity.CustomApiResult;
 import com.android.mb.junda.entity.Log1;
 import com.android.mb.junda.entity.Log1Resp;
+import com.android.mb.junda.utils.ActivityManager;
 import com.android.mb.junda.utils.Helper;
 import com.android.mb.junda.utils.JsonHelper;
+import com.android.mb.junda.utils.NavigationHelper;
 import com.android.mb.junda.utils.PreferencesHelper;
 import com.android.mb.junda.utils.ToastHelper;
 import com.android.mb.junda.widget.DividerItemDecoration;
@@ -106,23 +110,31 @@ public class Log1Fragment extends Fragment {
                     public void onSuccess(String response) {
                         Log1Resp log1Resp = JsonHelper.fromJson(response,Log1Resp.class);
                         if (log1Resp!=null){
-                            recyclerView.setPullLoadMoreCompleted();
-                            if (currentPage==1){
-                                if (Helper.isEmpty(log1Resp.getData())){
-                                    tvEmpty.setVisibility(View.VISIBLE);
-                                }else{
-                                    tvEmpty.setVisibility(View.GONE);
-                                    dataList.addAll(log1Resp.getData());
-                                    log1Adapter.setNewData(dataList);
-                                }
+                            if (log1Resp.getStatus()==1){
+                                ToastHelper.showToast(log1Resp.getMsg());
+                                PreferencesHelper.getInstance().putBoolean(ProjectConstants.Preferences.KEY_IS_LOGIN,false);
+                                PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_CURRENT_TOKEN,"");
+                                NavigationHelper.startActivity(getActivity(),LoginActivity.class,null,true);
                             }else{
-                                if (Helper.isEmpty(log1Resp.getData())){
-                                    recyclerView.setPushRefreshEnable(false);
+                                recyclerView.setPullLoadMoreCompleted();
+                                if (currentPage==1){
+                                    if (Helper.isEmpty(log1Resp.getData())){
+                                        tvEmpty.setVisibility(View.VISIBLE);
+                                    }else{
+                                        tvEmpty.setVisibility(View.GONE);
+                                        dataList.addAll(log1Resp.getData());
+                                        log1Adapter.setNewData(dataList);
+                                    }
                                 }else{
-                                    dataList.addAll(log1Resp.getData());
-                                    log1Adapter.setNewData(dataList);
+                                    if (Helper.isEmpty(log1Resp.getData())){
+                                        recyclerView.setPushRefreshEnable(false);
+                                    }else{
+                                        dataList.addAll(log1Resp.getData());
+                                        log1Adapter.setNewData(dataList);
+                                    }
                                 }
                             }
+
                         }
                     }
                 }) {

@@ -108,7 +108,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                         PreferencesHelper.getInstance().putBoolean(ProjectConstants.Preferences.KEY_IS_LOGIN,false);
                         PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_CURRENT_TOKEN,"");
                         NavigationHelper.startActivity(MainActivity.this,LoginActivity.class,null,true);
-                        ActivityManager.getInstance().closeAllActivityExceptOne(LoginActivity.class.getName());
                     }
 
                 }, R.string.dialog_negative, null);
