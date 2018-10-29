@@ -51,6 +51,11 @@ public class ProjectConstants {
          * 获取日志
          */
         public static final String GET_LOG_INFO = "/Api/Index/getLog";
+
+        /**
+         * 退出登录
+         */
+        public static final String GET_LOGOUT = "/Api/Index/logout";
     }
 
     /**

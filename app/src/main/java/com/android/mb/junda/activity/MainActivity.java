@@ -23,6 +23,7 @@ import com.android.mb.junda.utils.LogHelper;
 import com.android.mb.junda.utils.NavigationHelper;
 import com.android.mb.junda.utils.PhoneInfo;
 import com.android.mb.junda.utils.PreferencesHelper;
+import com.android.mb.junda.utils.ProgressDialogHelper;
 import com.android.mb.junda.utils.ToastHelper;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.CallBackProxy;
@@ -105,9 +106,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        PreferencesHelper.getInstance().putBoolean(ProjectConstants.Preferences.KEY_IS_LOGIN,false);
-                        PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_CURRENT_TOKEN,"");
-                        NavigationHelper.startActivity(MainActivity.this,LoginActivity.class,null,true);
+                        doLogout();
                     }
 
                 }, R.string.dialog_negative, null);
@@ -168,5 +167,42 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private void showIndex(int position){
         tvLog1.setTextColor(position==0?getResources().getColor(R.color.base_blue_light):getResources().getColor(R.color.text_color));
         tvLog2.setTextColor(position==1?getResources().getColor(R.color.base_blue_light):getResources().getColor(R.color.text_color));
+    }
+
+    private void doLogout(){
+        ProgressDialogHelper.showProgressDialog(this,"注销中...");
+        String userName = PreferencesHelper.getInstance().getString(ProjectConstants.Preferences.KEY_USERNAME);
+        String rid = PreferencesHelper.getInstance().getString(ProjectConstants.Preferences.KEY_REGISTRATION_ID);
+        if (Helper.isEmpty(rid)){
+            rid = JPushInterface.getRegistrationID(getApplicationContext());
+        }
+        EasyHttp.post(ProjectConstants.Url.GET_LOGOUT)
+                .params("username",userName)
+                .params("resid",rid)
+                .execute(new CallBackProxy<CustomApiResult<String>, String>(new SimpleCallBack<String>() {
+                    @Override
+                    public void onError(ApiException e) {
+                        ProgressDialogHelper.dismissProgressDialog();
+                        if (Helper.isNotEmpty(e.getMessage())){
+                            ToastHelper.showToast(e.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(String response) {
+                        ProgressDialogHelper.dismissProgressDialog();
+                        LoginResp loginResp = JsonHelper.fromJson(response,LoginResp.class);
+                        if (loginResp!=null){
+                            if (loginResp.getStatus() == 0){
+                                PreferencesHelper.getInstance().putBoolean(ProjectConstants.Preferences.KEY_IS_LOGIN,false);
+                                PreferencesHelper.getInstance().putString(ProjectConstants.Preferences.KEY_CURRENT_TOKEN,"");
+                                NavigationHelper.startActivity(MainActivity.this,LoginActivity.class,null,true);
+                            }else{
+                                LogHelper.e(loginResp.getMsg());
+                            }
+                        }
+                    }
+                }) {
+                });
     }
 }
