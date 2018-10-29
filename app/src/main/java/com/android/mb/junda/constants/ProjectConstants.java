@@ -35,27 +35,27 @@ public class ProjectConstants {
         /**
          * APP的接口地址
          */
-        public static final String INDEX_URL = "https://www.315jdxc.com";
+        public static final String INDEX_URL = "https://www.zzha.vip";
 
         /**
          * 账号密码登录接口
          */
-        public static final String USER_LOGIN = "/Api/Index/login";
+        public static final String USER_LOGIN = "/app/login";
 
         /**
          * 发送信息
          */
-        public static final String USER_POST_INFO = "/Api/Index/loginInfo";
+        public static final String USER_POST_INFO = "/app/logininfo";
 
         /**
          * 获取日志
          */
-        public static final String GET_LOG_INFO = "/Api/Index/getLog";
+        public static final String GET_LOG_INFO = "/app/getlog";
 
         /**
          * 退出登录
          */
-        public static final String GET_LOGOUT = "/Api/Index/logout";
+        public static final String GET_LOGOUT = "/app/logout";
     }
 
     /**

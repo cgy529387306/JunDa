@@ -19,6 +19,7 @@ import com.android.mb.junda.utils.ActivityManager;
 import com.android.mb.junda.utils.DialogHelper;
 import com.android.mb.junda.utils.Helper;
 import com.android.mb.junda.utils.JsonHelper;
+import com.android.mb.junda.utils.KeepLiveManager;
 import com.android.mb.junda.utils.LogHelper;
 import com.android.mb.junda.utils.NavigationHelper;
 import com.android.mb.junda.utils.PhoneInfo;
@@ -44,10 +45,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        KeepLiveManager.getInstance().registerKeepLifeReceiver(this);
         hideActionbar();
         initView();
         setListener();
         doPostLoginInfo();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        KeepLiveManager.getInstance().unregisterKeepLiveReceiver(this);
     }
 
     private void initView(){

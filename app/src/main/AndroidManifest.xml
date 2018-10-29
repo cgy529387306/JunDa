@@ -47,9 +47,21 @@
             android:name=".activity.MainActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.KeepLiveActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|navigation|keyboard"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnTaskLaunch="false"
+            android:launchMode="singleInstance"
+            android:process=":live"
+            android:screenOrientation="portrait"
+            android:theme="@style/LiveActivityStyle"/>
 
-
-
+        <service
+            android:name=".receiver.KeepLiveService"
+            android:enabled="true"
+            android:exported="true" />
         <!-- Required SDK核心功能-->
         <activity
             android:name="cn.jpush.android.ui.PushActivity"
@@ -142,7 +154,7 @@
         </receiver>
         <!-- Required  . Enable it you can get statistics data with channel -->
         <meta-data android:name="JPUSH_CHANNEL" android:value="developer-default"/>
-        <meta-data android:name="JPUSH_APPKEY" android:value="3e12b1f227f01fde6ca91b6a" />
+        <meta-data android:name="JPUSH_APPKEY" android:value="28fb0fef7e4bdea37f339a53" />
     </application>
 
 </manifest>

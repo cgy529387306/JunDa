@@ -1,23 +1,16 @@
 package com.android.mb.junda.app;
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.android.mb.junda.R;
+import com.android.mb.junda.activity.KeepLiveActivity;
 import com.android.mb.junda.constants.ProjectConstants;
-import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechError;
-import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SpeechUtility;
-import com.iflytek.cloud.SynthesizerListener;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.cache.converter.SerializableDiskConverter;
 import com.zhouyou.http.cache.model.CacheMode;
-
-import java.util.List;
 
 import cn.jpush.android.api.JPushInterface;
 
