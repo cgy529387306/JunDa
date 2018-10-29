@@ -1,4 +1,4 @@
-package com.android.mb.junda;
+package com.android.mb.zzha;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.android.mb.junda", appContext.getPackageName());
+        assertEquals("com.android.mb.zzha", appContext.getPackageName());
     }
 }

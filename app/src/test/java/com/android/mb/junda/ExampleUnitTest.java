@@ -1,4 +1,4 @@
-package com.android.mb.junda;
+package com.android.mb.zzha;
 
 import org.junit.Test;
 
